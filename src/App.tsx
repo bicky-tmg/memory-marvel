@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { Board } from "./components";
+import { Board, Marvel } from "./components";
 import { getBoardsData } from "./constant/board";
+import { MARVELS } from "./constant/marvel";
 
 function App() {
   const [timer, setTimer] = useState(60);
+  const [flips, setFlips] = useState(0);
+  const [score, setScore] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -12,7 +15,7 @@ function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const BOARDS = getBoardsData(0, 0, timer);
+  const BOARDS = getBoardsData(score, flips, timer);
 
   return (
     <main className="container mx-auto min-h-screen flex justify-center items-center">
@@ -31,56 +34,13 @@ function App() {
           ))}
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[20px] md:gap-[25px]">
-          <div className="w-[140px] md:w-[150px] h-[140px] md:h-[150px] rounded-[20px] cursor-pointer relative">
-            <div className="[perspective:150rem] relative w-full h-full group">
-              <div className="transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden group-hover:[transform:rotateY(-180deg)]">
-                <img src="/card-front.svg" alt="Card front" />
-              </div>
-              <div className="bg-white flex justify-center items-center rounded-[20px] [transform:rotateY(180deg)] group-hover:[transform:rotateY(0deg)] transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden">
-                <img src="/surf.svg" alt="Card back" />
-              </div>
-            </div>
-          </div>
-          <div className="w-[140px] md:w-[150px] h-[140px] md:h-[150px] rounded-[20px] cursor-pointer relative">
-            <div className="[perspective:150rem] relative w-full h-full group">
-              <div className="transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden group-hover:[transform:rotateY(-180deg)]">
-                <img src="/card-front.svg" alt="Card front" />
-              </div>
-              <div className="bg-white flex justify-center items-center rounded-[20px] [transform:rotateY(180deg)] group-hover:[transform:rotateY(0deg)] transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden">
-                <img src="/airplane.svg" alt="Card back" />
-              </div>
-            </div>
-          </div>
-          <div className="w-[140px] md:w-[150px] h-[140px] md:h-[150px] rounded-[20px] cursor-pointer relative">
-            <div className="[perspective:150rem] relative w-full h-full group">
-              <div className="transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden group-hover:[transform:rotateY(-180deg)]">
-                <img src="/card-front.svg" alt="Card front" />
-              </div>
-              <div className="bg-white flex justify-center items-center rounded-[20px] [transform:rotateY(180deg)] group-hover:[transform:rotateY(0deg)] transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden">
-                <img src="/bath-tub.svg" alt="Card back" />
-              </div>
-            </div>
-          </div>
-          <div className="w-[140px] md:w-[150px] h-[140px] md:h-[150px] rounded-[20px] cursor-pointer relative">
-            <div className="[perspective:150rem] relative w-full h-full group">
-              <div className="transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden group-hover:[transform:rotateY(-180deg)]">
-                <img src="/card-front.svg" alt="Card front" />
-              </div>
-              <div className="bg-white flex justify-center items-center rounded-[20px] [transform:rotateY(180deg)] group-hover:[transform:rotateY(0deg)] transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden">
-                <img src="/hotel.svg" alt="Card back" />
-              </div>
-            </div>
-          </div>
-          <div className="w-[140px] md:w-[150px] h-[140px] md:h-[150px] rounded-[20px] cursor-pointer relative">
-            <div className="[perspective:150rem] relative w-full h-full group">
-              <div className="transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden group-hover:[transform:rotateY(-180deg)]">
-                <img src="/card-front.svg" alt="Card front" />
-              </div>
-              <div className="bg-white flex justify-center items-center rounded-[20px] [transform:rotateY(180deg)] group-hover:[transform:rotateY(0deg)] transition-all duration-[0.8s] [transition-timing-function:ease] absolute top-0 left-0 w-full h-full [backface-visibility:hidden] overflow-hidden">
-                <img src="/cocktail.svg" alt="Card back" />
-              </div>
-            </div>
-          </div>
+          {MARVELS.map(({ id, marvelImg, value }) => (
+            <Marvel
+              key={id}
+              imgSrc={marvelImg}
+              onClick={() => setFlips((prev) => prev + 1)}
+            />
+          ))}
         </div>
       </section>
     </main>
