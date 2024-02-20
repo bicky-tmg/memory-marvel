@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Board, Marvel } from "./components";
 import { getBoardsData } from "./constant/board";
 import { MARVELS } from "./constant/marvel";
@@ -8,13 +8,17 @@ function App() {
   const [timer, setTimer] = useState(60);
   const [flips, setFlips] = useState(0);
   const [score, setScore] = useState(0);
+  const flippedMarvelsRef = useRef(new Map());
+  const [enableTimer, setEnableTimer] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    if (enableTimer) {
+      const interval = setInterval(() => {
+        setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [enableTimer]);
 
   const BOARDS = getBoardsData(score, flips, timer);
   const randomMarvels = useMemo(() => shuffle(MARVELS), []);
@@ -28,6 +32,7 @@ function App() {
         <div className="flex gap-6 mb-8 flex-wrap">
           {BOARDS.map(({ imgSrc, imgAlt, label, value }) => (
             <Board
+              key={label}
               imgSrc={imgSrc}
               imgAlt={imgAlt}
               label={label}
@@ -40,7 +45,16 @@ function App() {
             <Marvel
               key={id}
               imgSrc={marvelImg}
-              onClick={() => setFlips((prev) => prev + 1)}
+              flip={flippedMarvelsRef.current.has(id)}
+              onClick={() => {
+                if (!enableTimer) {
+                  setEnableTimer(true);
+                }
+
+                if (flippedMarvelsRef.current.has(id)) return;
+
+                flippedMarvelsRef.current.set(id, value);
+              }}
             />
           ))}
         </div>

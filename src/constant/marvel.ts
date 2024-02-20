@@ -22,31 +22,31 @@ export const MARVELS = [
   {
     id: 5,
     marvelImg: "/cocktail.svg",
-    value: "surf",
+    value: "cocktail",
   },
   {
     id: 6,
     marvelImg: "/bath-tub.svg",
-    value: "airplane",
+    value: "bathtub",
   },
   {
     id: 7,
     marvelImg: "/airplane.svg",
-    value: "bathtub",
+    value: "airplane",
   },
   {
     id: 8,
     marvelImg: "/surf.svg",
-    value: "cocktail",
+    value: "surf",
   },
   {
     id: 9,
     marvelImg: "/surf.svg",
-    value: "hotel",
+    value: "surf",
   },
   {
     id: 10,
     marvelImg: "/hotel.svg",
-    value: "surf",
+    value: "hotel",
   },
 ];
