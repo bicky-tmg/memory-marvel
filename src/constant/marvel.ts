@@ -21,32 +21,32 @@ export const MARVELS = [
   },
   {
     id: 5,
-    marvelImg: "/surf.svg",
+    marvelImg: "/cocktail.svg",
     value: "surf",
   },
   {
     id: 6,
-    marvelImg: "/airplane.svg",
+    marvelImg: "/bath-tub.svg",
     value: "airplane",
   },
   {
     id: 7,
-    marvelImg: "/bath-tub.svg",
+    marvelImg: "/airplane.svg",
     value: "bathtub",
   },
   {
     id: 8,
-    marvelImg: "/cocktail.svg",
+    marvelImg: "/surf.svg",
     value: "cocktail",
   },
   {
     id: 9,
-    marvelImg: "/hotel.svg",
+    marvelImg: "/surf.svg",
     value: "hotel",
   },
   {
     id: 10,
-    marvelImg: "/surf.svg",
+    marvelImg: "/hotel.svg",
     value: "surf",
   },
 ];

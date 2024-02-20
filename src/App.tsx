@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Board, Marvel } from "./components";
 import { getBoardsData } from "./constant/board";
 import { MARVELS } from "./constant/marvel";
+import { shuffle } from "./utils/shuffle";
 
 function App() {
   const [timer, setTimer] = useState(60);
@@ -16,6 +17,7 @@ function App() {
   }, []);
 
   const BOARDS = getBoardsData(score, flips, timer);
+  const randomMarvels = useMemo(() => shuffle(MARVELS), []);
 
   return (
     <main className="container mx-auto min-h-screen flex justify-center items-center">
@@ -34,7 +36,7 @@ function App() {
           ))}
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[20px] md:gap-[25px]">
-          {MARVELS.map(({ id, marvelImg, value }) => (
+          {randomMarvels.map(({ id, marvelImg, value }) => (
             <Marvel
               key={id}
               imgSrc={marvelImg}
