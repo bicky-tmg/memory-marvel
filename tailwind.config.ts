@@ -8,6 +8,9 @@ export default {
       fontFamily: {
         sans: ['"Quicksand"', ...defaultTheme.fontFamily.sans],
       },
+      backgroundImage: {
+        "cover-pattern": "url('/bg-cover.png')",
+      },
     },
   },
   plugins: [],
