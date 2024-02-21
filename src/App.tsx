@@ -12,7 +12,8 @@ function App() {
   const [enableTimer, setEnableTimer] = useState(false);
   const flippedMarvelsRef = useRef(new Map());
   const matchedMarvelsRef = useRef(new Map());
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [hasWon, sethasWon] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (enableTimer) {
@@ -45,11 +46,19 @@ function App() {
   }, [flippedMarvelsRef.current.size, matchedMarvelsRef.current.size]);
 
   useEffect(() => {
+    // Win condition
     if (matchedMarvelsRef.current.size === randomMarvels.length) {
-      setIsGameOver(true);
-      setEnableTimer(false);
+      sethasWon(true);
     }
-  }, [randomMarvels.length, matchedMarvelsRef.current.size]);
+
+    // Lose condition
+    if (timer === 0) {
+      sethasWon(false);
+    }
+
+    setEnableTimer(false);
+    setOpenModal(true);
+  }, [randomMarvels.length, matchedMarvelsRef.current.size, timer]);
 
   return (
     <>
@@ -94,7 +103,7 @@ function App() {
           </div>
         </section>
       </main>
-      <Modal />
+      {openModal && <Modal won={hasWon} score={score} flips={flips} />}
     </>
   );
 }
