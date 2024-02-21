@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Board, Marvel, Modal } from "./components";
 import { getBoardsData } from "./constant/board";
 import { MARVELS } from "./constant/marvel";
@@ -14,6 +14,12 @@ function App() {
   const matchedMarvelsRef = useRef(new Map());
   const [hasWon, sethasWon] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [marvels, setMarvels] = useState<typeof MARVELS>([]);
+
+  useEffect(() => {
+    const randomMarvels = shuffle(MARVELS);
+    setMarvels(randomMarvels);
+  }, []);
 
   useEffect(() => {
     if (enableTimer) {
@@ -25,7 +31,6 @@ function App() {
   }, [enableTimer]);
 
   const BOARDS = getBoardsData(score, flips, timer);
-  const randomMarvels = useMemo(() => shuffle(MARVELS), []);
 
   useEffect(() => {
     if (flippedMarvelsRef.current.size === 2) {
@@ -46,8 +51,9 @@ function App() {
   }, [flippedMarvelsRef.current.size, matchedMarvelsRef.current.size]);
 
   useEffect(() => {
+    if (marvels.length === 0) return; // Prevents the first render where the marvels are empty
     // Win condition
-    if (matchedMarvelsRef.current.size === randomMarvels.length) {
+    if (matchedMarvelsRef.current.size === marvels.length) {
       sethasWon(true);
       setEnableTimer(false);
       setOpenModal(true);
@@ -59,9 +65,11 @@ function App() {
       setEnableTimer(false);
       setOpenModal(true);
     }
-  }, [randomMarvels.length, matchedMarvelsRef.current.size, timer]);
+  }, [marvels.length, matchedMarvelsRef.current.size, timer]);
 
   function handleReset() {
+    const randomMarvels = shuffle(MARVELS);
+    setMarvels(randomMarvels);
     setTimer(TIMER);
     setFlips(0);
     setScore(0);
@@ -91,7 +99,7 @@ function App() {
             ))}
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[20px] md:gap-[25px]">
-            {randomMarvels.map(({ id, marvelImg, value }) => (
+            {marvels.map(({ id, marvelImg, value }) => (
               <Marvel
                 key={id}
                 imgSrc={marvelImg}
