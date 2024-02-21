@@ -12,6 +12,7 @@ function App() {
   const [enableTimer, setEnableTimer] = useState(false);
   const flippedMarvelsRef = useRef(new Map());
   const matchedMarvelsRef = useRef(new Map());
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
     if (enableTimer) {
@@ -41,7 +42,14 @@ function App() {
         }, 500);
       }
     }
-  }, [flippedMarvelsRef.current.size]);
+  }, [flippedMarvelsRef.current.size, matchedMarvelsRef.current.size]);
+
+  useEffect(() => {
+    if (matchedMarvelsRef.current.size === randomMarvels.length) {
+      setIsGameOver(true);
+      setEnableTimer(false);
+    }
+  }, [randomMarvels.length, matchedMarvelsRef.current.size]);
 
   return (
     <main className="container mx-auto min-h-screen flex justify-center items-center">
