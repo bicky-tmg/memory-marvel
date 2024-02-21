@@ -20,3 +20,20 @@ export function getBoardsData(score: number, flips: number, timer: number) {
     },
   ];
 }
+
+export function getModalBoardsData(score: number, flips: number) {
+  return [
+    {
+      imgSrc: "/medal.svg",
+      imgAlt: "Score icon",
+      label: "Score",
+      value: score,
+    },
+    {
+      imgSrc: "/flip.svg",
+      imgAlt: "Flip icon",
+      label: "Flips",
+      value: flips,
+    },
+  ];
+}
