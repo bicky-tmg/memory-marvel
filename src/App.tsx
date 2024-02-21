@@ -70,14 +70,26 @@ function App() {
   function handleReset() {
     const randomMarvels = shuffle(MARVELS);
     setMarvels(randomMarvels);
+    flippedMarvelsRef.current.clear();
+    matchedMarvelsRef.current.clear();
     setTimer(TIMER);
     setFlips(0);
     setScore(0);
     setEnableTimer(false);
-    flippedMarvelsRef.current.clear();
-    matchedMarvelsRef.current.clear();
     sethasWon(false);
     setOpenModal(false);
+  }
+
+  function handleMarvelClick(id: number, value: string) {
+    if (!enableTimer) {
+      setEnableTimer(true);
+    }
+
+    if (flippedMarvelsRef.current.has(id)) return;
+
+    flippedMarvelsRef.current.set(id, value);
+
+    setFlips((prev) => prev + 1);
   }
 
   return (
@@ -107,17 +119,7 @@ function App() {
                   flippedMarvelsRef.current.has(id) ||
                   matchedMarvelsRef.current.has(id)
                 }
-                onClick={() => {
-                  if (!enableTimer) {
-                    setEnableTimer(true);
-                  }
-
-                  if (flippedMarvelsRef.current.has(id)) return;
-
-                  flippedMarvelsRef.current.set(id, value);
-
-                  setFlips((prev) => prev + 1);
-                }}
+                onClick={() => handleMarvelClick(id, value)}
               />
             ))}
           </div>
