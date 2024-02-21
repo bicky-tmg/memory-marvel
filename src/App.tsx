@@ -11,6 +11,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [enableTimer, setEnableTimer] = useState(false);
   const flippedMarvelsRef = useRef(new Map());
+  const matchedMarvelsRef = useRef(new Map());
 
   useEffect(() => {
     if (enableTimer) {
@@ -29,11 +30,15 @@ function App() {
       const [first, second] = flippedMarvelsRef.current.values();
       if (first === second) {
         setScore((prev) => prev + ADD_SCORE);
+        for (const [id, value] of flippedMarvelsRef.current) {
+          matchedMarvelsRef.current.set(id, value);
+        }
+        flippedMarvelsRef.current.clear();
       } else {
         setTimeout(() => {
           flippedMarvelsRef.current.clear();
           setScore((prev) => prev - SUB_SCORE);
-        }, 1000);
+        }, 500);
       }
     }
   }, [flippedMarvelsRef.current.size]);
@@ -60,7 +65,10 @@ function App() {
             <Marvel
               key={id}
               imgSrc={marvelImg}
-              flip={flippedMarvelsRef.current.has(id)}
+              flip={
+                flippedMarvelsRef.current.has(id) ||
+                matchedMarvelsRef.current.has(id)
+              }
               onClick={() => {
                 if (!enableTimer) {
                   setEnableTimer(true);
