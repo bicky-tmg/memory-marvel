@@ -49,16 +49,28 @@ function App() {
     // Win condition
     if (matchedMarvelsRef.current.size === randomMarvels.length) {
       sethasWon(true);
+      setEnableTimer(false);
+      setOpenModal(true);
     }
 
     // Lose condition
     if (timer === 0) {
       sethasWon(false);
+      setEnableTimer(false);
+      setOpenModal(true);
     }
-
-    setEnableTimer(false);
-    setOpenModal(true);
   }, [randomMarvels.length, matchedMarvelsRef.current.size, timer]);
+
+  function handleReset() {
+    setTimer(TIMER);
+    setFlips(0);
+    setScore(0);
+    setEnableTimer(false);
+    flippedMarvelsRef.current.clear();
+    matchedMarvelsRef.current.clear();
+    sethasWon(false);
+    setOpenModal(false);
+  }
 
   return (
     <>
@@ -103,7 +115,14 @@ function App() {
           </div>
         </section>
       </main>
-      {openModal && <Modal won={hasWon} score={score} flips={flips} />}
+      {openModal && (
+        <Modal
+          handleReset={handleReset}
+          won={hasWon}
+          score={score}
+          flips={flips}
+        />
+      )}
     </>
   );
 }

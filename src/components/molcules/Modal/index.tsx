@@ -6,9 +6,10 @@ interface ModalProps {
   won: boolean;
   score: number;
   flips: number;
+  handleReset: () => void;
 }
 
-export default function Modal({ won, score, flips }: ModalProps) {
+export default function Modal({ won, score, flips, handleReset }: ModalProps) {
   const BOARDS = useMemo(
     () => getModalBoardsData(score, flips),
     [flips, score]
@@ -46,6 +47,7 @@ export default function Modal({ won, score, flips }: ModalProps) {
           src="/refresh.svg"
           alt="Refresh"
           className="absolute left-1/2 bottom-[-58px] transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+          onClick={handleReset}
         />
       </div>
     </div>
